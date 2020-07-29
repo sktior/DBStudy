@@ -11,3 +11,47 @@ CREATE SEQUENC sequence_name
 [CYCLE | NOCYCLE] //시퀀스 번호를 순환 사용할 것인지 지정
 [CACHE n | NOCACHE] //시퀀스 생성속도를 개선하기 위해 캐싱 여부 지정
 ```
+
+> 시퀀스 생성 및 활용
+```
+-- board.bnum에 대한 시퀀스 생성
+create SEQUENCE board_bnum_seq
+start with 1
+minvalue 0;
+-- 삭제
+drop sequence board_bnum_seq;
+
+-- 현재 시퀀스 번호
+select board_bnum_seq.currval from dual;
+-- 시퀀스번호 생성
+select board_bnum_seq.nextval from dual;
+
+-- 시퀀스 수정(시작 값은 수정 불가 , 1씩 증가하게 만듦)
+alter sequence board_bnum_seq
+increment by 1;
+-- min값은 이미 증가된 상태에서는 불가
+alter sequence board_bnum_seq
+increment by 1
+minvalue 10;
+-- 현재값보다 큰값 지정 불가
+alter sequence board_bnum_seq
+increment by 1
+minvalue 63;
+
+alter sequence board_bnum_seq
+increment by 1
+minvalue 10
+maxvalue 20
+cache 3
+cycle;
+
+desc board;
+
+-- 시퀀스 삽입
+insert into board(BNUM,BCATEGORY,BTITLE) values(board_bnum_seq.nextval, 1001, '테스트');
+commit;
+select * from board;
+
+delete from board;
+commit;
+```
