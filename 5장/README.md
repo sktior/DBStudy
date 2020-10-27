@@ -70,3 +70,56 @@ SELECT * FROM EMP WHERE ENAME LIKE '%le%'; // 이름에 le가 포함되어 있�
 SELECT * FROM EMP WHERE ENAME NOT LIKE '%le%'; // 이름에 le가 포함되어 있지 않은 데이터 조회
 
 ```
+
+# IS NULL
+- 특정 열 또는 연산의 결과 값이 NULL 인지 여부를 확인
+```
+select * from emp where mgr is null;
+```
+
+# 집합 연산자
+- UNION
+  - 연결된 SELECT 문의 결과 값을 합집합으로 묶어 준다. 중복은 제거됨
+  - SELECT 문이 출력하려는 열 개수와 각 열의 자료형이 순서별로 일치해야 한다.
+  ```
+    SELECT empno, ename, sal, deptno
+    from emp
+    where deptno = 10
+    union
+    select empno, ename, sal, deptno
+    from emp
+    where deptno = 20;
+  ```
+- UNION ALL
+  - 연결된 SELECT문의 결과 값을 합집합으로 묶어 준다. 중복된 결과 값도 모두 출력
+  ```
+  SELECT empno, ename, sal, deptno
+    from emp
+    where deptno = 10
+    union all
+    select empno, ename, sal, deptno
+    from emp
+    where deptno = 20;
+  ```
+- MINUS
+  - 먼저 작성한 SELECT문의 결과 값에서 다음 SELECT문의 결과 값을 차집합 처리
+  - 먼저 작성한 SELECT문의 결과 값 중 다음 SELECT문에 존재하지 않는 데이터만 출력
+  ```
+    SELECT empno, ename, sal, deptno
+    from emp
+    minus
+    SELECT empno, ename, sal, deptno
+    from emp
+    where deptno = 10;
+  ```
+- INTERSECT
+  - 먼저 작성한 SELECT문과 다음 SELECT문의 결과 값이 같은 데이터만 출력 -> 교집합
+  ```
+  SELECT EMPNO, ENAME, SAL, DEPTNO
+    FROM EMP
+    INTERSECT
+  SELECT EMPNO, ENAME, SAL, DEPTNO
+    FROM EMP
+    WHERE DEPTNO = 10;
+  ```
+  
