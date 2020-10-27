@@ -27,3 +27,18 @@
   ```
   
 - 문자열 길이를 구하는 LENGTH 함수
+  - 특정 문자열의 길이를 구할 때 사용
+  ```
+  SELECT ENAME, LENGTH(ENAME) FROM EMP;
+  SELECT ENAME, LENGTH(ENAME) FROM EMP WHERE LENGTH(ENAME) >= 5;
+  ```
+  - LENGTHB 함수는 바이트를 출력 EX) length('한글') -> 2 // lengthb('한글') -> 4
+
+- 문자열 일부를 추출하는 SUBSTR 함수
+  - 필요한 부분만 추출하는 함수
+  - SUBSTR(문자열데이터, 시작위치, 추출길이) : 문자열의 시작 위치부터 추출 길이만큼 추출, 시작 위치가 음수일 경우 마지막 위치부터 거슬러 올라간 위치에서 시작
+  - SUBSTR(문자열데이터, 시작 위치) : 문자열 데이터의 시작 위치부터 문자열 데이터 끝까지 추출, 시작 위치가 음수면 마지막 위치부터 거슬러 올라간 위치에서 끝까지 추출
+  ```
+  SELECT JOB, SUBSTR(JOB,1,2), SUBSTR(JOB,3,2), SUBSTR(JOB,5) FROM EMP;
+  ```
+  
