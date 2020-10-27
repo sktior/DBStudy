@@ -255,3 +255,26 @@ SELECT TO_DATE('2018-07-14', 'YYYY-MM-DD') AS TODATE1,
 SELECT * FROM EMP
        WHERE HIREDATE > TO_DATE('1981/06/01', 'YYYY/MM/DD');
 ```
+
+# NULL 처리 함수
+
+## NVL 함수의 기본 사용법
+- NVL([NULL 인지 여부를 검사할 데이터 or 열(필수)], [앞의 데이터가 NULL일 경우 반환할 데이터](필수))
+```
+SELECT EMPNO, ENAME, SAL, COMM, SAL+COMM,
+       NVL(COMM,0), SAL+NVL(COMM,0)
+       FROM EMP;
+만약 COMM이 NULL인사람은 0으로 변경, 두번째는 COMM이 NULL이면 0으로 바꾸고 SAL과 덧셈
+```
+
+## NVL2 함수의 기본 사용법
+- NVL 함수와 비슷하지만 데이터가 NULL이 아닐 때 반환할 데이터를 추가로 지정 가능
+- NVL2([NULL인지 여부를 검사할 데이터 or 열(필수)], [앞 데이터가 NULL이 아니면 반환할 데이터 or 계산식(필수)], [앞 데이터가 NULL일 경우 반환할 데이터 or 계산식(필수)])
+```
+SELECT EMPNO, ENAME, COMM,
+       NVL2(COMM, '0', 'X'),
+       NVL2(COMM, SAL*12+COMM, SAL*12) AS ANNSAL
+       FROM EMP;
+만약 COMM이 널이아니면 '0', 널이면 'X' , 두번째는 COMM이 널이아니면 SAL * 12와 COMM을 더하고, 널이면 SAL * 12만 반환
+```
+
