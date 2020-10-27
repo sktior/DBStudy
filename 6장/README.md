@@ -186,3 +186,72 @@ SELECT MOD(15,6),
 ```
 
 # 날짜 데이터를 다루는 날짜 함수
+- 날짜 데이터 + 숫자 : 날짜 데이터보다 숫자만큼 일수 이후 날짜
+- 날짜 데이터 - 숫자 : 날짜 데이터보다 숫자만큼 일수 이전 날짜
+- 날짜 데이터 - 날짜 데이터 : 두 날짜 데이터 간의 일수 차이
+- 날짜 데이터 + 날짜 데이터 : 연산 불가 (지원X)
+
+## SYSDATE
+- 날짜 함수중 가장 내표적인 함수
+- 현재 날짜와 시간 보여줌
+```
+SELECT SYSDATE AS NOW,
+       SYSDATE-1 AS YESTERDAY,
+       SYSDATE+1 AS TOMORROW
+       FROM DUAL;
+```
+
+## ADD_MONTHS
+- 몇 개월 이후 날짜를 구하는 함수
+- ADD_MONTHS([날짜 데이터(필수)], [더할 개월 수(정수)(필수)])
+```
+SELECT SYSDATE,
+       ADD_MONTHS(SYSDATE, 3)
+       FROM DUAL;
+-> 오늘날짜 , 오늘날짜에 + 3개월
+```
+
+## MONTHS_BETWEEN
+- 두 날짜 데이터간 개월 수 차이
+- MONTHS_BETWEEN([날짜 데이터1(필수)],[날짜 데이터2(필수)]
+```
+SELECT EMPNO, ENAME, HIREDATE, SYSDATE,
+       MONTHS_BETWEEN(HIREDATE, SYSDATE) AS MONTHS1,
+       MONTHS_BETWEEN(SYSDATE, HIREDATE) AS MONTHS2,
+       TRUNC(MONTHS_BETWEEN(SYSDATE, HIREDATE)) AS MONTHS3
+       FROM EMP;
+-> 7369	smith	80/12/17	20/10/27	-478.350956914575866188769414575866188769	478.350956914575866188769414575866188769	478
+```
+
+## 등등 필요시 찾아보기
+
+# 자료형을 변환하는 형 변환 함수
+- TO_CHAR : 숫자 또는 날짜 데이터를 문자 데이터로 변환
+- TO_NUMBER : 문자 데이터를 숫자 데이터로 변환
+- TO_DATE : 문자 데이터를 날짜 데이터로 변환
+
+## TO_CHAR
+- TO_CHAR([날짜데이터(필수)], '[출력되길 원하는 문자 형태(필수)]')
+```
+SELECT TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI:SS') AS 현재날짜시간 FROM DUAL;
+```
+- 형식 : P159
+
+## TO_NUMBER
+- 문자 데이터를 숫자 데이터로 변환
+- TO_NUMBER('[문자열 데이터(필수)]', '[인식될 숫자형태(필수)]')
+```
+SELECT TO_NUMBER('1,300', '999,999') - TO_NUMBER('1,500', '999,999') FROM DUAL;
+```
+
+## TO_DATE
+- 문자 데이터를 날짜 데이터로 변환
+- TO_DATE('[문자열 데이터(필수)]', '[인식될 날짜형태(필수)]')
+```
+SELECT TO_DATE('2018-07-14', 'YYYY-MM-DD') AS TODATE1,
+       TO_DATE('20180714', 'YYYY-MM-DD') AS TODATE2
+       FROM DUAL;
+       
+SELECT * FROM EMP
+       WHERE HIREDATE > TO_DATE('1981/06/01', 'YYYY/MM/DD');
+```
