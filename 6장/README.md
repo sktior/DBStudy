@@ -76,3 +76,52 @@
     -> 010-1234-5678 , 010 1234 5678 , 01012345678
   ```
   
+- 데이터의 빈 공간을 특정 문자로 채우는 LPAD, RPAD 함수
+  - 데이터와 자릿수를 지정한 후 데이터 길이가 지정한 자릿수보다 작을 경우에 나머지 공간을 특정 문자로 채우는 함수
+  - LPAD는 왼쪽, RPAD는 오른쪽
+  - LPAD,RPAD([문자열 데이터 or 열이름(필수)], [데이터의 자릿수(필수)], [빈 공간에 채울 문자(선택])
+  ```
+  SELECT 'Oracle',
+    LPAD('Oracle', 10, '#') AS LPAD_1,
+    RPAD('Oracle', 10, '*') AS RPAD_1,
+    LPAD('Oracle', 10) AS LPAD_2,
+    RPAD('Oracle', 10) AS RPAD_2
+    FROM DUAL;
+    -> ####Oracle, Oracle****,     Oracle, Oracle    결과값
+  ```
+
+- 두 문자열 데이터를 합치는 CONCAT 함수
+  - 두 개의 문자열 데이터를 하나의 데이터로 연결하는 함수
+  - 두 개의 입력 데이터 지정을 하고 열이나 문자열 데이터 모두 지정 가능
+  ```
+  SELECT CONCAT(EMPNO, ENAME),
+    CONCAT(EMPNO, CONCAT(' : ', ENAME))
+    FROM EMP
+    WHERE ENAME = 'scott';
+    -> 7788scott , 7788 : scott
+  ```
+  - ||로 concat을 대신할 수 있다.
+  ```
+  SELECT EMPNO || ENAME,
+    EMPNO || ' : ' || ENAME
+    FROM EMP;
+  ```
+  
+- 특정 문자를 지우는 TRIM, LTRIM, RTRIM
+  - 문자열 데이터 내에서 특정 문자를 지우기 위해 사용
+  - TRIM([삭제할 옵션(선택)][삭제할 문자(선택)] FROM [원본 문자열 데이터(필수)])
+  - 삭제할 문자가 없으면 공백이 제거됨
+  ```
+  // 삭제할 문자 없을 때
+  SELECT '[' || TRIM(' _ _Oracle_ _ ') || ']' AS TRIM,
+       '[' || TRIM(LEADING FROM ' _ _Oracle_ _ ') || ']' AS TRIM_LEADING,
+       '[' || TRIM(TRAILING FROM ' _ _ Oracle_ _ ') || ']' AS TRIM_TRAILING,
+       '[' || TRIM(BOTH FROM ' _ _Oracle_ _ ') || ']' AS TRIM_BOTH
+       FROM DUAL;
+  // 삭제할 문자 있을 때
+  SELECT '[' || TRIM('_' FROM '_ _Oracle_ _') || ']' AS TRIM,
+       '[' || TRIM(LEADING '_' FROM '_ _Oracle_ _') || ']' AS TRIM_LEADING,
+       '[' || TRIM(TRAILING '_' FROM '_ _ Oracle_ _') || ']' AS TRIM_TRAILING,
+       '[' || TRIM(BOTH '_' FROM '_ _Oracle_ _') || ']' AS TRIM_BOTH
+       FROM DUAL;
+  ```
