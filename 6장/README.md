@@ -17,7 +17,7 @@
   ```
   SELECT ENAME, UPPER(ENAME), LOWER(ENAME), INITCAP(ENAME) FROM EMP;
   ```
-  - 사용 예제 (대, 소문자 상관ㅇ벗이 검색 단어와 일치한 문자열 데이터 찾기)
+  - 사용 예제 (대, 소문자 상관없이 검색 단어와 일치한 문자열 데이터 찾기)
   ```
   SELECT * FROM EMP
   WHERE UPPER(ENAME) = UPPER('scott');
