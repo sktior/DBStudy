@@ -278,3 +278,42 @@ SELECT EMPNO, ENAME, COMM,
 만약 COMM이 널이아니면 '0', 널이면 'X' , 두번째는 COMM이 널이아니면 SAL * 12와 COMM을 더하고, 널이면 SAL * 12만 반환
 ```
 
+## DECODE
+- IF, SWITCH-CASE와 같이 기준이 되는 데이터를 먼저 지장하고 데이터 값에 따라 다른 결과값 내보내는 함수
+```
+DECODE([검사 대상 데이터, 연산이나 함수의 결과],[조건1],[조건1에 해당시 결과],[조건2],[조건2에 해당시 결과].....[조건에 없을시 ELSE 같은 곳에 나올 결과])
+
+
+SELECT EMPNO,ENAME,JOB,SAL, DECODE(JOB,'MANAGER',SAL*1.1,'SALESMAN',SAL*1.05,'ANALYST',SAL,SAL*1.03) AS 인상급 FROM EMP;
+```
+
+## CASE
+```
+CASE [검사 데이터, 연산이나 함수의 결과(선택)]
+  WHEN [조건1] THEN [ 조건1의 해당시 결과]
+  WHEN [조건2] THEN [ 조건2의 해당시 결과] 
+  ...
+  ELSE [결과]
+END
+
+
+SELECT EMPNO,ENAME,JOB,SAL,
+    CASE JOB
+    WHEN 'MANAGER' THEN SAL*1.1
+    WHEN 'SALESMAN' THEN SAL*1.05
+    WHEN 'ANALYST' THEN SAL
+    ELSE SAL*1.03
+    END
+    AS 인상급
+    FROM EMP;
+    
+    
+SELECT EMPNO, ENAME, COMM,
+    CASE
+    WHEN COMM IS NULL THEN '해당없음'
+    WHEN COMM = 0 THEN '수당없음'
+    WHEN COMM > 0 THEN '수당 : ' || COMM
+    END
+    AS 수당
+    FROM EMP;
+```
