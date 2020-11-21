@@ -354,3 +354,20 @@ SELECT EMPNO,
        NVL(TO_CHAR(COMM),'N/A') AS COMM
        FROM EMP;
 ```
+
+4.
+![image](https://user-images.githubusercontent.com/42050824/99871406-89a68f00-2c1d-11eb-848c-7766b881bdec.png)
+```
+SELECT EMPNO,
+       ENAME,
+       MGR,
+       CASE 
+       WHEN MGR IS NULL THEN '0000'
+       WHEN SUBSTR(MGR,1,2) = '75' THEN '5555'
+       WHEN SUBSTR(MGR,1,2) = '76' THEN '6666'
+       WHEN SUBSTR(MGR,1,2) = '77' THEN '7777'
+       WHEN SUBSTR(MGR,1,2) = '78' THEN '8888'
+       ELSE TO_CHAR(MGR)
+       END AS COMM_TEXT
+       FROM EMP;
+```
