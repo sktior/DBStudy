@@ -343,3 +343,14 @@ SELECT EMPNO,
        FROM EMP;
        
 ```
+
+3.
+![image](https://user-images.githubusercontent.com/42050824/99871250-33851c00-2c1c-11eb-9341-49f3f6d0b970.png)
+```
+SELECT EMPNO,
+       ENAME,
+       HIREDATE,
+       TO_CHAR((NEXT_DAY(ADD_MONTHS(HIREDATE,3),'월요일')),'yyyy-MM-DD') AS R_JOB,
+       NVL(TO_CHAR(COMM),'N/A') AS COMM
+       FROM EMP;
+```
