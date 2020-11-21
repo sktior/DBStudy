@@ -46,3 +46,27 @@ ORDER BY DEPTNO,JOB;
 ![image](https://user-images.githubusercontent.com/42050824/99871774-7c3ed400-2c20-11eb-88b4-dd4cbbe977c4.png)
 
 - 그룹별 결과를 출력하고 마지막에 테이블 전체 대상으로 한 결과를 출력한다.
+
+## CUBE
+```
+SELECT DEPTNO, JOB, COUNT(*), MAX(SAL), SUM(SAL), AVG(SAL)
+FROM EMP
+GROUP BY CUBE (DEPTNO,JOB)
+ORDER BY DEPTNO,JOB;
+```
+![image](https://user-images.githubusercontent.com/42050824/99871815-c4f68d00-2c20-11eb-8daf-21c2f894c584.png)
+
+- ROLLUP과 다르게 CUBE는 지정한 모든 열에서 가능한 조합의 결과를 모두 출력
+
+## GROUPING SETS
+- 같은 수준의 그룹화 열이 여러 개일 때 각 열별 그룹화를 통해 결과 값을 출력
+```
+SELECT DEPTNO, JOB, COUNT(*)
+FROM EMP
+GROUP BY GROUPING SETS(DEPTNO, JOB)
+ORDER BY DEPTNO, JOB;
+```
+![image](https://user-images.githubusercontent.com/42050824/99871918-536b0e80-2c21-11eb-8867-de644bec503d.png)
+
+- 부서별 인원수, 직책별 인원수의 결과 값을 하나의 결과로 출력 가능
+- 즉, 지정한 모든 열을 각각 대그룹으로 처리하여 출력
