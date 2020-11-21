@@ -89,3 +89,43 @@ ORDER BY DEPTNO, JOB;
 - 0과1로 출력이되며 0은 그룹화 되었음을 의미, 1은 그룹화 되지 않았음을 의미
 
 ## 그외 그룹화 함수 P.202
+
+## 연습문제
+1.
+![image](https://user-images.githubusercontent.com/42050824/99872129-f40dfe00-2c22-11eb-8d60-bd9a989d490f.png)
+```
+SELECT DEPTNO, TRUNC(AVG(SAL)) AS AVG_SAL, MAX(SAL) AS MAX_SAL, MIN(SAL) AS MIN_SAL, COUNT(*) AS CNT
+FROM EMP
+GROUP BY DEPTNO;
+```
+
+2.
+```
+SELECT JOB, COUNT(*) FROM EMP
+GROUP BY JOB
+HAVING COUNT(*) >= 3;
+```
+
+3.
+![image](https://user-images.githubusercontent.com/42050824/99872272-f4f35f80-2c23-11eb-81e7-afad8035e5e6.png)
+```
+SELECT TO_CHAR(HIREDATE,'YYYY') AS HIRE_YEAR, DEPTNO, COUNT(*) AS CNT
+FROM EMP
+GROUP BY TO_CHAR(HIREDATE,'YYYY'), DEPTNO;
+```
+
+4.
+![image](https://user-images.githubusercontent.com/42050824/99872311-4b609e00-2c24-11eb-8e9c-b4c16c211a6f.png)
+```
+SELECT NVL2(COMM,'O','X') AS EXIST_COMM, COUNT(*) CNT
+FROM EMP
+GROUP BY NVL2(COMM,'O','X');
+```
+
+5.
+![image](https://user-images.githubusercontent.com/42050824/99872391-cfb32100-2c24-11eb-8579-045f25a29a4b.png)
+```
+SELECT DEPTNO, TO_CHAR(HIREDATE,'YYYY') AS HIRE_YEAR, COUNT(*) AS CNT, MAX(SAL) AS MAX_SAL, SUM(SAL) AS SUM_SAL, AVG(SAL) AS AVG_SAL
+FROM EMP
+GROUP BY ROLLUP(DEPTNO, TO_CHAR(HIREDATE,'YYYY'));
+```
