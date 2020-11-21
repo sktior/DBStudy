@@ -317,3 +317,4 @@ SELECT EMPNO, ENAME, COMM,
     AS 수당
     FROM EMP;
 ```
+
