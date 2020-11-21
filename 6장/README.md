@@ -318,3 +318,6 @@ SELECT EMPNO, ENAME, COMM,
     FROM EMP;
 ```
 
+
+# 연습문제
+![image](https://user-images.githubusercontent.com/42050824/99870801-392d3280-2c19-11eb-9d84-cdb656bf7641.png)
