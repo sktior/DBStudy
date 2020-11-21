@@ -70,3 +70,22 @@ ORDER BY DEPTNO, JOB;
 
 - 부서별 인원수, 직책별 인원수의 결과 값을 하나의 결과로 출력 가능
 - 즉, 지정한 모든 열을 각각 대그룹으로 처리하여 출력
+
+## 그룹화 함수 
+- 그룹화 데이터의 식별이 쉽고 가독성을 높이기 위한 목적으로 사용
+
+## GROUPING 함수
+- ROLLUP이나 CUBE 함수를 사용한 GROUP BY 절에 그룹화 대상으로 지정한 열이 그룹화된 상태로 결과가 집계되었는지 확인
+```
+SELECT ~ ,GROUPING [GROUP BY절에 ROLLUP 또는 CUBE에 명시한 그룹화 할 열 이름]
+  FROM~
+  
+SELECT DEPTNO, JOB, COUNT(*), MAX(SAL), SUM(SAL), AVG(SAL), GROUPING(DEPTNO), GROUPING(JOB)
+FROM EMP
+GROUP BY CUBE(DEPTNO, JOB)
+ORDER BY DEPTNO, JOB;
+```
+![image](https://user-images.githubusercontent.com/42050824/99872023-13585b80-2c22-11eb-8305-259caa661541.png)
+- 0과1로 출력이되며 0은 그룹화 되었음을 의미, 1은 그룹화 되지 않았음을 의미
+
+## 그외 그룹화 함수 P.202
