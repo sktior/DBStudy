@@ -320,4 +320,14 @@ SELECT EMPNO, ENAME, COMM,
 
 
 # 연습문제
+## P.174
+1.
 ![image](https://user-images.githubusercontent.com/42050824/99870801-392d3280-2c19-11eb-9d84-cdb656bf7641.png)
+```
+select EMPNO,
+       RPAD(SUBSTR(EMPNO,1,2),4,'*') AS MASKING_EMPNO,
+       ENAME,
+       RPAD(SUBSTR(ENAME,1,1),LENGTH(ENAME),'*') AS MASKING_ENAME
+       FROM EMP
+       WHERE LENGTH(ENAME) BETWEEN  5 AND 5;
+```
