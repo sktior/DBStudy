@@ -331,3 +331,15 @@ select EMPNO,
        FROM EMP
        WHERE LENGTH(ENAME) BETWEEN  5 AND 5;
 ```
+
+2.
+![image](https://user-images.githubusercontent.com/42050824/99871053-e94f6b00-2c1a-11eb-814c-7dc7a4194e48.png)
+```
+SELECT EMPNO,
+       ENAME,
+       SAL,
+       TRUNC(SAL/21.5,2) AS DAY_PAY,
+       ROUND((SAL/21.5) / 8 , 1) AS TIME_PAY
+       FROM EMP;
+       
+```
