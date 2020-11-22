@@ -56,3 +56,26 @@ SELECT E1.EMPNO, E1.ENAME, E1.MGR,
 ```
 ![image](https://user-images.githubusercontent.com/42050824/99894466-296c2780-2cc7-11eb-899a-175078485552.png)
 
+## 외부조인
+- 두 테이블간 조인 수행에서 조인 기준 열의 어느 한쪽이 NULL이어도 강제로 출력하는 방식
+- 왼쪽 외부 조인 : WHERE TABLE1.COL1 = TABLE2.COL1(+)
+```
+SELECT E1.EMPNO, E1.ENAME, E1.MGR,
+       E2.EMPNO AS MGR_EMPNO,
+       E2.ENAME AS MGR_ENAME
+       FROM EMP E1, EMP E2
+       WHERE E1.MGR = E2.EMPNO(+)
+       ORDER BY E1.EMPNO;
+```
+![image](https://user-images.githubusercontent.com/42050824/99894522-e52d5700-2cc7-11eb-8ba3-6b3ec4b73e6d.png)
+
+- 오른쪽 외부 조인 : WHERE TABLE1.COL1(+) = TABLE2.COL1
+```
+SELECT E1.EMPNO, E1.ENAME, E1.MGR,
+       E2.EMPNO AS MGR_EMPNO,
+       E2.ENAME AS MGR_ENAME
+       FROM EMP E1, EMP E2
+       WHERE E1.MGR(+) = E2.EMPNO
+       ORDER BY E1.EMPNO;
+```
+![image](https://user-images.githubusercontent.com/42050824/99894536-042be900-2cc8-11eb-9498-9f415df0c2d2.png)
