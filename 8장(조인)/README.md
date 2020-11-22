@@ -79,3 +79,59 @@ SELECT E1.EMPNO, E1.ENAME, E1.MGR,
        ORDER BY E1.EMPNO;
 ```
 ![image](https://user-images.githubusercontent.com/42050824/99894536-042be900-2cc8-11eb-9498-9f415df0c2d2.png)
+
+## 자연조인 ( NATURAL JOIN ) 
+- 등가 조인을 대신해 사용할 수 잇는 조인방식
+- 조인 대상이 되는 두 테이블에 이름과 자료형이 같은 열을 찾은 후 그 열을 기준으로 등가 조인 하는 방식
+```
+SELECT E.EMPNO, E.ENAME, E.JOB, E.MGR, E.HIREDATE, E.SAL, E.COMM,
+       DEPTNO, D.DNAME, D.LOC
+       FROM EMP E NATURAL JOIN DEPT D
+       ORDER BY DEPTNO, E.EMPNO;
+```
+![image](https://user-images.githubusercontent.com/42050824/99894594-b2379300-2cc8-11eb-941f-d35f12463818.png)
+- EMP 테이블과 DEPT 테이블에는 공통으로 DEPTNO를 가지고 있다. -> NATURAL JOIN은 자동으로 DEPTNO 열을 기준으로 등가 조인
+- 기준이되는 DEPTNO에는 이름을 붙이면 안된다.
+
+## JOIN ~ USING
+- 기존 등가 조인을 대신하는 조인방식
+- NATURAL JOIN과 달리 USING 키워드는 조인 기준으로 사용할 열을 명시하고 사용
+```
+FROM TABLE1 JOIN TABLE2 USING (조인에 사용할 기준열)
+
+SELECT E.EMPNO, E.ENAME, E.JOB, E.MGR, E.HIREDATE, E.SAL, E.COMM,
+       DEPTNO, D.DNAME, D.LOC
+       FROM EMP E JOIN DEPT D USING (DEPTNO)
+       WHERE SAL >= 3000
+       ORDER BY DEPTNO, E.EMPNO;
+```
+
+## JOIN ~ ON 
+- 가장 범용성 있는 키워드
+- 기존 WHERE절에 잇는 조인 조건식을 ON 키워드 옆에 작성
+```
+SELECT E.EMPNO, E.ENAME, E.JOB, E.MGR, E.HIREDATE, E.SAL, E.COMM,
+       E.DEPTNO, D.DNAME, D.LOC
+       FROM EMP E JOIN DEPT D ON (E.DEPTNO = D.DEPTNO)
+       WHERE SAL <= 3000
+       ORDER BY E.DEPTNO, EMPNO;
+```
+
+## OUTER JOIN
+- 왼쪽 : 기존 -> WHERE TABLE1.COL1 = TABLE2.COL1(+)
+         SQL-99 -> FROM TABLE1 LEFT OUTER JOIN TABLE2 ON (조인 조건식)
+- 오른쪽, 전체 외부조인도 같은 방식
+```
+SELECT E1.EMPNO, E1.ENAME, E1.MGR,
+       E2.EMPNO AS MGR_EMPNO,
+       E2.ENAME AS MGR_ENAME
+       FROM EMP E1 LEFT OUTER JOIN EMP E2 ON(E1.MGR = E2.EMPNO)
+       ORDER BY E1.EMPNO;
+```
+- 3개 이상 테이블 조인
+```
+SELECT * 
+FROM TABLE1, TABLE2, TABLE3
+WHERE TABLE1.COL = TABLE2.COL
+AND TABLE2.COL = TABLE3.COL;
+```
