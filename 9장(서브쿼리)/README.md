@@ -107,3 +107,53 @@ WHERE EXISTS ( SELECT DNAME
                 FROM DEPT
                 WHERE DEPTNO = 50);      // 50번의 부서는 없으므로 아무것도 출력 하지 않음
 ```
+
+## 비교할 열이 여러개인 다중열 서브쿼리
+- SELECT절에 비교할 데이터를 여러 개 지정하는 방식
+```
+SELECT * FROM EMP
+WHERE (DEPTNO, SAL) IN (SELECT DEPTNO, MAX(SAL)
+                        FROM EMP
+                        GROUP BY DEPTNO);
+```
+
+## FROM절에 사용하는 서브쿼리와 WITH절
+- FROM절에 사용하는 서브쿼리를 인라인 뷰 라고 부른다.
+```
+SELECT E10.EMPNO, E10.ENAME, E10.DEPTNO, D.DNAME, D.LOC
+FROM (SELECT * FROM EMP WHERE DEPTNO = 10) E10,
+     (SELECT * FROM DEPT) D
+WHERE E10.DEPTNO = D.DEPTNO;
+```
+- FROM절에 너무 많은 서브쿼리를 지정하면 가독성과 성능이 떨어질 수 있기 때문에 WITH절 사용
+```
+WITH
+[별칭1] AS (SELECT문 1),
+[별칭2] AS (SELECT문 2),
+...
+[별칭N) AS (SELECT문 N)
+SELECT
+ FROM 별칭1, 별칭2, 별칭3
+ ..
+ 
+WITH
+E10 AS (SELECT * FROM EMP WHERE DEPTNO = 10),
+D   AS (SELECT * FROM DEPT)
+SELECT E10.EMPNO, E10.ENAME, E10.DEPTNO, D.DNAME, D.LOC
+FROM E10, D
+WHERE E10.DEPTNO = D.DEPTNO;
+```
+
+## SELECT절에 사용하는 서브쿼리
+- 스칼라 서브쿼리라고 부르며, SELECT절에 하나의 열 영역으로서 결과를 출력할 수 있다.
+```
+SELECT EMPNO, ENAME, JOB, SAL,
+        (SELECT GRADE
+        FROM SALGRADE
+        WHERE E.SAL BETWEEN LOSAL AND HISAL) AS SALGRADE,
+        DEPTNO,
+        (SELECT DNAME
+        FROM DEPT
+        WHERE E.DEPTNO = DEPT.DEPTNO) AS DNAME
+        FROM EMP E;
+```
