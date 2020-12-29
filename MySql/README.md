@@ -19,3 +19,17 @@ commit;
 
 select * from tbl_a;
 ```
+
+# timezon 에러 
+```
+SHOW VARIABLES WHERE Variable_Name LIKE "%dir"
+->
+-> ;
+
+datadir 경로로 이동
+my파일 열어서 default-time-zone='+9:00' 추가
+
+관리자 권한으로 cmd 열고 mariaDB 폴더의 bin으로 이동
+net stop mysql; 정지후
+net start mysql; 
+```
